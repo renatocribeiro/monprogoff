@@ -1,0 +1,19 @@
+export function bookmarkletGeneratePage(){ 
+
+  if (!window.location.href.includes('festivaloffavignon.com/espace-client/mes-favoris')) {
+    alert('Ouvrez https://www.festivaloffavignon.com/espace-client/mes-favoris');
+  }
+
+    const cardImages = document.querySelectorAll('a.card-image');
+    var ids = [];
+    cardImages.forEach((card, i) => {
+      const regex = /https:\/\/www\.festivaloffavignon\.com\/spectacles\/(\d*)-\s*/g;
+      const idArr = [...card.href.matchAll(regex)].map(match => match[1]);
+      ids.push(idArr[0]);
+    });
+    const uniqueIds = [...new Set(ids)];
+    const inputName = $('#inputNameUpload').val();
+    const newUrl = 'http://127.0.0.1:5500/public/index.html?p='+uniqueIds.join()+'&n='+inputName;
+    window.open(newUrl, '_blank');
+    console.log(newUrl); 
+  }

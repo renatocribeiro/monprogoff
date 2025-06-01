@@ -1,0 +1,80 @@
+.truncate-lines {
+  -webkit-line-clamp: var(--lines, 1);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden; 
+}
+
+.card {
+  --bs-card-border-width: 0;
+  border: 2.0px solid #f8f9fa;
+  border-radius: 0.0rem;    
+
+}
+
+.hover-border:hover {
+  border: 2.0px solid #FF7E2F;
+  border-radius: 0.0rem;    
+}
+
+.card-body {
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+
+}
+
+
+.col-box {
+  height: var(--height, 40px);
+}
+
+.card-img-top {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-control {
+  resize: none;
+  border-radius: 0;
+}
+
+#voirPage {
+  background-color: #FF7E2F;
+  color: #000000;
+  border-radius: 0;
+}
+
+
+#output{
+  text-transform:uppercase;
+  color:#fdf6f0;
+  font-size:6em;
+  font-weight:bold;
+  text-align:left;
+  text-shadow:0.08em 0em #940f08;
+}
+
+.spanCopied {
+  opacity: 0;
+  transition: opacity 1s ease; /* Duration of fade-out */
+  color: green;
+  margin-left: 10px;
+}
+
+.spanCopied.show {
+  opacity: 1;
+}
+
+.colSquare300 {
+  width: 300px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.cardSquare300 {
+  aspect-ratio: 1 / 1;
+  max-width: 300px;
+  width: 100%;
+}
