@@ -13,7 +13,7 @@ export function bookmarkletGeneratePage(){
     });
     const uniqueIds = [...new Set(ids)];
     const inputName = $('#inputNameUpload').val();
-    const newUrl = 'http://127.0.0.1:5500/public/index.html?p='+uniqueIds.join()+'&n='+inputName;
+    const newUrl = 'https://renatocribeiro.github.io/monprogoff/index.html?p='+uniqueIds.join()+'&n='+inputName;
     window.open(newUrl, '_blank');
     console.log(newUrl); 
   }
