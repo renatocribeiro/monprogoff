@@ -256,9 +256,7 @@ function getDateText(beg, end) {
 }
 
 function showFaveMode(faveTitle, strParams) {
-  const title = `
-    <h1 class="text-center my-4" id="h1-title">${faveTitle}</h1>
-  `;
+  const title = `<h1 class="text-center my-4" id="h1-title">${faveTitle}</h1>`;
   $("body").append(title);
 
   const truncateString = (string = '', maxLength = 50) => 
@@ -292,13 +290,13 @@ function showFaveMode(faveTitle, strParams) {
     
         const $col = $("<div>", { class: "col" }).appendTo($row);
         const $card = $("<div>", { class: "card h-100 bg-light hover-border"}).appendTo($col);
-        const $aImg = $("<a>", { href: url}).appendTo($card);    
+        const $aImg = $("<a>", { href: url, target: "_blank"}).appendTo($card);
         const $img = $("<img>", {class: "card-img-top", src: url_image, alt: url_image}).appendTo($aImg);
         const $cardBody = $("<div>", { class: "card-body" }).appendTo($card);
         
         const $rowTitle = $("<div>", {class: "row"}).appendTo($cardBody);   
         const $colTitle = $("<div>", {class: "col col-box", style:"--height: 40px"}).appendTo($rowTitle);    
-        const $aTitle = $("<a>", { href: url, class: "text-decoration-none text-reset"}).appendTo($colTitle);    
+        const $aTitle = $("<a>", { href: url, target: "_blank", class: "text-decoration-none text-reset"}).appendTo($colTitle);
         const $cardTitle = $("<h6>", { class: "card-title truncate-lines", text: name, style:"--lines: 2"}).appendTo($aTitle);    
         
         const $rowLocation = $("<div>", {class: "row"}).appendTo($cardBody);   
