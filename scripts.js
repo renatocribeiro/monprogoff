@@ -4,13 +4,10 @@ import { bookmarkletGeneratePage } from './bookmarklet.js';
 export function parseParams(){
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  var faveTitle = "";
+  var faveTitle = "Mes favoris";
   if (urlParams.has("n")){
     const nameString = urlParams.get('n');
     faveTitle = nameString;
-    if (!!nameString.str) {
-      faveTitle = "Mes favoris";
-    }
   }
   if (urlParams.has("p")){
     const tagsString = urlParams.get('p');
@@ -23,32 +20,24 @@ export function parseParams(){
 
 
 function setFooter(){
-  const footer = `<div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <div class="col-5 d-flex align-items-center"> 
-        <span class="mb-3 mb-md-0 text-body-secondary">Dernière mise à jour des données : 20 mai 2025 à 20h14</span>
-      </div>
-
-      <ul class="nav col-4 justify-content-end list-unstyled d-flex">
-        <li class="ms-3">
-          <a class="text-body-secondary" href="https://github.com/renatocribeiro">
-            <i class="bi bi-github h2"></i>
-          </a>
-        </li>
-      </ul>
-    </footer>
-  </div>`
+  const footer = `
+  <footer class="text-center d-flex flex-column justify-content-center" style="height: 150px;">
+    <div class="footerRow">Ce site est un projet open source et totalement indépendant.</div>
+    <div class="footerRow">Il n’est ni affilié ni soutenu par AF& C.</div>
+    <div class="footerRow">Dernière mise à jour des données : 09 juin 2025 à 19h00</div>
+    <div class="footerRow">Le code source est disponible <a class="custom-link" href="https://github.com/renatocribeiro/monprogoff">ici</a></div>
+  </footer>`
   $("body").append(footer);
 
 }
 function creationMode() {
   const home = `
-  <h1 class="text-center my-4" id="h1-title">Les coups de coeur du OFF</h1>
+  <h1 class="text-center my-4" id="h1-title">Mur d'affiches</h1>
   <h5 class="text-center my-4">Choisissez une option pour commencer</h5>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 colSquare300" role="button" data-bs-toggle="modal" data-bs-target="#copyModal">
-        <div class="card cardSquare300" id="cardCopy">
+        <div class="card cardSquare300 hover-border" id="cardCopy">
           <div class="card-body">
             <h5 class="card-title">Génération à partir de liens</h5>
             <p class="card-text">Collez une ou plusieurs URLs de festivaloffavignon.com : une liste de spectacles sera générée automatiquement à partir de ces liens.</p>
@@ -56,7 +45,7 @@ function creationMode() {
         </div>
       </div>
       <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 colSquare300" role="button" data-bs-toggle="modal" data-bs-target="#uploadModal">
-        <div class="card cardSquare300">
+        <div class="card cardSquare300 hover-border">
           <div class="card-body">
             <h5 class="card-title">Créer depuis une page enregistrée</h5>
             <p class="card-text">Sauvegardez une page de favoris sur festivaloffavignon.com, puis importez ce fichier ici. La liste sera générée automatiquement.</p>
@@ -64,7 +53,7 @@ function creationMode() {
         </div>
       </div>
       <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 colSquare300" role="button" data-bs-toggle="modal" data-bs-target="#bookmarkletModal">
-        <div class="card cardSquare300">
+        <div class="card cardSquare300 hover-border">
           <div class="card-body">
             <h5 class="card-title">Créer via Marque-page</h5>
             <p class="card-text">Sauvegardez le marque-page fourni dans votre barre de favoris. Ensuite, allez sur la page de favoris de festivaloffavignon.com et ouvrez ce marque-page pour générer automatiquement votre liste.</p>
@@ -177,10 +166,6 @@ function setUploadModal() {
     Cliquez sur le bouton te téléchargement ci-dessous et choisissez le fichier html que vous venez de sauvegarder.<br>
     Cliquez sur le bouton 'Voir ma page de favoris!'.`;
   $("<p>", {html: instructions}).appendTo($mbTitle);
-  // $("<p>", {text: "Appuyez sur CTRL+S ou ⌘+S."}).appendTo($mbTitle);
-  // $("<p>", {text: `Choisissez l’emplacement où vous voulez sauvegarder le fichier.`}).appendTo($mbTitle);
-  // $("<p>", {text: "Cliquez sur le bouton te téléchargement ci-dessours."}).appendTo($mbTitle);
-  // $("<p>", {text: "Cliquez sur le bouton 'Voir ma page de favoris!'."}).appendTo($mbTitle);
 
   const $lblName = $("<label>", {for: "inputNameUpload", text:"Veuillez saisir un nom pour la liste de favoris:"}).appendTo($mbTitle);
   const $inputName = $("<input>", {type: "text", class: "form-control", id: "inputNameUpload", value: "Mes favoris du " + moment().format('DD/MM/YYYY à HH:mm'), required: true}).appendTo($mbTitle);
@@ -226,7 +211,7 @@ function setBookmarkletModal() {
   $("<p>", {text : "Pour commencer, faites glisser (drag & drop) le lien du marque-page proposé vers votre barre de favoris de votre navigateur."}).appendTo($mbTitle);
   $("<p>", {text : "Ensuite, rendez-vous sur la page de favoris de festivaloffavignon.com et cliquez sur ce marque-page dans votre barre pour générer automatiquement votre liste."}).appendTo($mbTitle);
   const bookmarkletStr = getBookmarkletUriEncoded();
-  const $aBookmarklet = $("<a>", {href : bookmarkletStr, text: "marque-page"}).appendTo($mbTitle);
+  const $aBookmarklet = $("<a>", {href : bookmarkletStr, text: "marque-page", style: "color: black;"}).appendTo($mbTitle);
 
 }
 
@@ -255,16 +240,14 @@ function getDateText(beg, end) {
   }
 }
 
+function formatHour(s) {
+  return s.replace(":", "h");
+}
+
 function showFaveMode(faveTitle, strParams) {
-  const title = `<h1 class="text-center my-4" id="h1-title">${faveTitle}</h1>`;
+  const title = `<p class="showModeTitle">${faveTitle}</p>`;
   $("body").append(title);
-
-  const truncateString = (string = '', maxLength = 50) => 
-    string.length > maxLength 
-      ? `${string.substring(0, maxLength)}…`
-      : string
   
-
     const idsArray = strParams ? strParams.split(',') : [];
 
     const $container = $("<div>", { class: "container" });
@@ -276,51 +259,49 @@ function showFaveMode(faveTitle, strParams) {
         return;
       }
 
-
         const vals = avignonMap.get(id);
         const name = vals[0]
         const url = `http://www.festivaloffavignon.com/spectacles/${id}-${vals[1]}`;
         const url_image = `https://www.festivaloffavignon.com/data/spectacles/${id}-${vals[2]}-catalogue.${vals[3]}`;
         const beg = vals[4];
         const end = vals[5];
-        const heure = vals[6];
-        const heureFin = vals[7];
-        const duree = vals[8];
+        const heure = formatHour(vals[6]);
+        const heureFin = formatHour(vals[7]);
+        const duree = formatHour(vals[8]);
         const location = vals[9];
-    
+        const genre = vals[10] == "nan" ? '' : vals[10];
+
         const $col = $("<div>", { class: "col" }).appendTo($row);
-        const $card = $("<div>", { class: "card h-100 bg-light hover-border"}).appendTo($col);
+        const $card = $("<div>", { class: "card h-100 hover-border"}).appendTo($col);
         const $aImg = $("<a>", { href: url, target: "_blank"}).appendTo($card);
         const $img = $("<img>", {class: "card-img-top", src: url_image, alt: url_image}).appendTo($aImg);
         const $cardBody = $("<div>", { class: "card-body" }).appendTo($card);
         
         const $rowTitle = $("<div>", {class: "row"}).appendTo($cardBody);   
-        const $colTitle = $("<div>", {class: "col col-box", style:"--height: 40px"}).appendTo($rowTitle);    
+        const $colTitle = $("<div>", {class: "col col-box", style:"--height: 20px"}).appendTo($rowTitle);    
         const $aTitle = $("<a>", { href: url, target: "_blank", class: "text-decoration-none text-reset"}).appendTo($colTitle);
-        const $cardTitle = $("<h6>", { class: "card-title truncate-lines", text: name, style:"--lines: 2"}).appendTo($aTitle);    
+        const $cardTitle = $("<h6>", { class: "card-title truncate-lines", text: name, style:"--lines: 1"}).appendTo($aTitle);    
         
         const $rowLocation = $("<div>", {class: "row"}).appendTo($cardBody);   
-        const $colLocationIcon = $("<div>", {class: "col-1 col-box", style:"--height: 20px"}).appendTo($rowLocation);    
-        const $locationIcon = $("<i>", { class: "bi bi-geo"}).appendTo($colLocationIcon);
         const $colLocation = $("<div>", {class: "col col-box", style:"--height: 20px"}).appendTo($rowLocation);    
         const $location = $("<small>", { class: "text-muted truncate-lines", text: location, style:"--lines: 1"}).appendTo($colLocation);
 
         const $rowDate = $("<div>", {class: "row"}).appendTo($cardBody);   
-        const $colDateIcon = $("<div>", {class: "col-1 col-box", style:"--height: 20px"}).appendTo($rowDate);    
-        const $dateIcon = $("<i>", { class: "bi bi-calendar-event"}).appendTo($colDateIcon);
-        const $colDate = $("<div>", {class: "col col-box", style:"--height: 20px"}).appendTo($rowDate);    
-        const $date = $("<small>", { class: "text-muted", text: getDateText(beg, end), style:"--lines: 1"}).appendTo($colDate);
+        const $colDate = $("<div>", {class: "col"}).appendTo($rowDate);    
+        const $date = $("<p>", { class: "cardRow m-0", text: getDateText(beg, end)}).appendTo($colDate);
+
 
         const $rowTime = $("<div>", {class: "row"}).appendTo($cardBody);   
-        const $colTimeIcon = $("<div>", {class: "col-1 col-box", style:"--height: 20px"}).appendTo($rowTime);    
-        const $timeIcon = $("<i>", { class: "bi bi-clock"}).appendTo($colTimeIcon);
-        const $colTime = $("<div>", {class: "col-6 col-box", style:"--height: 20px; padding-right: 0px;"}).appendTo($rowTime);    
-        const $time = $("<small>", { class: "text-muted", text: `${heure}→${heureFin}`, style:"--lines: 1"}).appendTo($colTime);
-        const $colDurationIcon = $("<div>", {class: "col-1 col-box", style:"--height: 20px;padding-left: 0px;"}).appendTo($rowTime);    
-        const $durationIcon = $("<i>", { class: "bi bi-hourglass"}).appendTo($colDurationIcon);
-        const $colDuration = $("<div>", {class: "col-3 col-box", style:"--height: 20px;padding-left: 0px;"}).appendTo($rowTime);    
-        const $duration = $("<small>", { class: "text-muted", text: duree, style:"--lines: 1"}).appendTo($colDuration);
-    });
+        const $colTime = $("<div>", {class: "col"}).appendTo($rowTime);    
+        const $time = $("<p>", { class: "cardRow m-0", text: `${heure}→${heureFin} · ${duree}`}).appendTo($colTime);
+
+
+        const $rowGenre = $("<div>", {class: "row"}).appendTo($cardBody);   
+        const $colGenre = $("<div>", {class: "col"}).appendTo($rowGenre);    
+        const $genre = $("<p>", { class: "cardRow m-0", text: genre}).appendTo($colGenre);
+
+
+      });
     $container.appendTo("body");
     setFooter();
 }

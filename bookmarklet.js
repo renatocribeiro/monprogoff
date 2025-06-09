@@ -2,6 +2,7 @@ export function bookmarkletGeneratePage(){
 
   if (!window.location.href.includes('festivaloffavignon.com/espace-client/mes-favoris')) {
     alert('Ouvrez https://www.festivaloffavignon.com/espace-client/mes-favoris');
+    return
   }
 
     const cardImages = document.querySelectorAll('a.card-image');

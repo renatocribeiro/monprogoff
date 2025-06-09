@@ -7,14 +7,16 @@
 
 .card {
   --bs-card-border-width: 0;
-  border: 2.0px solid #f8f9fa;
-  border-radius: 0.0rem;    
+  border: 2.0px solid #c8cfa0;
+  border-radius: 0.5rem;    
+  background-color: #fdfdfd;
+
+
 
 }
 
-.hover-border:hover {
-  border: 2.0px solid #FF7E2F;
-  border-radius: 0.0rem;    
+.hover-border:hover { 
+  border: 2.0px solid #78ABA8;
 }
 
 .card-body {
@@ -25,14 +27,8 @@
 
 }
 
-
 .col-box {
   height: var(--height, 40px);
-}
-
-.card-img-top {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
 
 .form-control {
@@ -58,7 +54,7 @@
 
 .spanCopied {
   opacity: 0;
-  transition: opacity 1s ease; /* Duration of fade-out */
+  transition: opacity 1s ease;
   color: green;
   margin-left: 10px;
 }
@@ -78,3 +74,46 @@
   max-width: 300px;
   width: 100%;
 }
+
+body {
+  background-color: #fceecd;
+  font-family: 'Roboto', sans-serif;
+}
+
+.btn-primary {
+  background-color: #78ABA8;
+}
+
+.cardRow {
+  line-height: 1;
+  height: 1em;
+  --bs-text-opacity: 1;
+  color: var(--bs-secondary-color);
+  font-size: 0.875em;
+}
+
+.footerRow {
+  line-height: 1;
+  height: 1em;
+  font-size: 0.750em;
+}
+
+.custom-link {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.custom-link:hover {
+  text-decoration: underline;
+}
+
+.showModeTitle {
+  font-size: 2.0em;
+  text-align: center;
+  font-weight: bold;
+  filter: blur(0.1px);
+  letter-spacing: -0.9px;
+  color: #2f4544;
+}
+
