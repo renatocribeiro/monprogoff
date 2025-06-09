@@ -23,7 +23,7 @@ function setFooter(){
   const footer = `
   <footer class="text-center d-flex flex-column justify-content-center" style="height: 150px;">
     <div class="footerRow">Ce site est un projet open source et totalement indépendant.</div>
-    <div class="footerRow">Il n’est ni affilié ni soutenu par AF& C.</div>
+    <div class="footerRow">Il n’est ni affilié ni soutenu par AF&C.</div>
     <div class="footerRow">Dernière mise à jour des données : 09 juin 2025 à 19h00</div>
     <div class="footerRow">Le code source est disponible <a class="custom-link" href="https://github.com/renatocribeiro/monprogoff">ici</a></div>
   </footer>`
