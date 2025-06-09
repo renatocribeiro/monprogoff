@@ -14,7 +14,7 @@ export function bookmarkletGeneratePage(){
     });
     const uniqueIds = [...new Set(ids)];
     const inputName = $('#inputNameUpload').val();
-    const newUrl = 'https://renatocribeiro.github.io/monprogoff/index.html?p='+uniqueIds.join()+'&n='+inputName;
+    const newUrl = 'https://renatocribeiro.github.io/murdaffiches/index.html?p='+uniqueIds.join()+'&n='+inputName;
     window.open(newUrl, '_blank');
     console.log(newUrl); 
   }
