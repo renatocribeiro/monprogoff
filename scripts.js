@@ -423,7 +423,7 @@ function showFaveMode(faveTitle, strParams) {
           <li><a class="dropdown-item dropdownItemSort" href="#" data-value="titre">Titre</a></li>
           <li><a class="dropdown-item dropdownItemSort" href="#" data-value="heure">Heure</a></li>
         </ul>
-      <button type="button" class="btn btn-primary btn-sm btnSort" id="sortDirection"><i class="fa-solid fa-arrow-down-wide-short"></i></button>
+      <button type="button" class="btn btn-primary btn-sm btnSort" id="sortDirection"><i class="fa-solid fa-arrow-up-wide-short"></i></button>
     </div>
     </div>
   </div>
