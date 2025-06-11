@@ -120,8 +120,30 @@ body {
 .btnShare {
   background-color: #fdfdfd;
   border: 2.0px solid #c8cfa0;
+  color: #2f4544;
 }
 
 .btnShare:hover {
   border: 2.0px solid #78ABA8;
+}
+
+.btnSort {
+  background-color: #fdfdfd;
+  border: 2.0px solid #c8cfa0;
+  color: #2f4544;
+}
+
+.btnSort:hover, .btnSort:focus {
+  background-color: inherit !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  border: 2.0px solid #78ABA8;
+}
+
+.dropdownItemSort.active, .dropdownItemSort:focus, .dropdownItemSort:active {
+  background-color: #78ABA8;
+}
+
+.dropdownMenuSort.active, .dropdownMenuSort:active, .dropdownMenuSort:focus, .dropdownMenuSort.show {
+  background-color: #78ABA8;
 }

@@ -30,7 +30,7 @@ function setFooter(){
   $("body").append(footer);
 }
 
-function setShareButtons(){
+function setShareButtons(faveTitle){
   const buttons = `
     <div>
       <div class="btn-group" role="group">
@@ -40,7 +40,7 @@ function setShareButtons(){
     </div>`;
   $("#footerDisclaimer").prepend(buttons);
   
-  $('#mailBtn').attr("href", `mailto:?Subject=Mur d'affiches&body=${encodeURIComponent(window.location.href)}`);
+  $('#mailBtn').attr("href", `mailto:?Subject=${encodeURIComponent(faveTitle)}&body=${encodeURIComponent(window.location.href)}`);
   const modalShare = `
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="qrModal">
   <div class="modal-dialog modal-dialog-centered" style="max-width: 290px; margin: 0 auto;">
@@ -283,65 +283,174 @@ function formatHour(s) {
   return s.replace(":", "h");
 }
 
+function sortByDefault(map, asc) {
+  if (asc) {
+    return map;
+  } else {
+    return new Map([...map.entries()].reverse());
+  }
+}
+
+function sortByTitre(map, asc) {
+  var sortedMap = new Map(
+    [...map.entries()].sort(([, a], [, b]) => {
+      const strA = a[0];
+      const strB = b[0];
+      return strA.localeCompare(strB);
+    })
+  );
+  if (asc) {
+    return sortedMap;
+  } else {
+    return new Map([...sortedMap.entries()].reverse());
+  }
+}
+
+function sortByHeure(mymap, asc) {
+  var sortedMap = new Map(
+    [...mymap.entries()].sort(([, a], [, b]) => {
+      const timeA = a[6];
+      const timeB = b[6];
+      const [hA, mA] = timeA.split(':').map(Number);
+      const [hB, mB] = timeB.split(':').map(Number);
+      return hA !== hB ? hA - hB : mA - mB;
+    })
+  );
+  if (asc) {
+    return sortedMap;
+  } else {
+    return new Map([...sortedMap.entries()].reverse());
+  }
+}
+
+function applySort(map, sortBy, asc) {
+  switch (sortBy) {
+    case "defaut":
+      return sortByDefault(map, asc);
+    case "titre":
+      return sortByTitre(map, asc);
+    case "heure":
+      return sortByHeure(map, asc);
+    default:
+      console.log("wrong sortby -", sortBy);
+      return map;
+  }
+}
+
+function drawCards(subMap) {
+  var asc = false;
+  var sortBy = "";
+  const selectedItem = $('#dropdownSort .dropdown-item.active');
+  if (selectedItem.length > 0) {
+    const value = selectedItem.attr('data-value');
+    const label = selectedItem.text();
+    sortBy = value;
+  } else {
+    sortBy = "defaut";
+  }
+  const sortIcon = $("#sortDirection").find('i');
+    if (sortIcon.hasClass('fa-arrow-down-wide-short')) {
+      asc = false;
+    } else {
+      asc = true;
+    }
+
+  const sortedMap = applySort(subMap, sortBy, asc);
+  const $row = $("<div>", { class: "row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-5 row-cols-xxl-6 gy-4" });
+  for (const [id, vals] of sortedMap) {
+      const name = vals[0]
+      const url = `http://www.festivaloffavignon.com/spectacles/${id}-${vals[1]}`;
+      const url_image = `https://www.festivaloffavignon.com/data/spectacles/${id}-${vals[2]}-catalogue.${vals[3]}`;
+      const beg = vals[4];
+      const end = vals[5];
+      const heure = formatHour(vals[6]);
+      const heureFin = formatHour(vals[7]);
+      const duree = formatHour(vals[8]);
+      const location = vals[9];
+      const genre = vals[10] == "nan" ? '' : vals[10];
+
+      const $col = $("<div>", { class: "col" }).appendTo($row);
+      const $card = $("<div>", { class: "card h-100 hover-border"}).appendTo($col);
+      const $aImg = $("<a>", { href: url, target: "_blank"}).appendTo($card);
+      const $img = $("<img>", {class: "card-img-top", src: url_image, alt: url_image}).appendTo($aImg);
+      const $cardBody = $("<div>", { class: "card-body" }).appendTo($card);
+      
+      const $rowTitle = $("<div>", {class: "row"}).appendTo($cardBody);   
+      const $colTitle = $("<div>", {class: "col col-box", style:"--height: 20px"}).appendTo($rowTitle);    
+      const $aTitle = $("<a>", { href: url, target: "_blank", class: "text-decoration-none text-reset"}).appendTo($colTitle);
+      const $cardTitle = $("<h6>", { class: "card-title truncate-lines", text: name, style:"--lines: 1"}).appendTo($aTitle);    
+      
+      const $rowLocation = $("<div>", {class: "row"}).appendTo($cardBody);   
+      const $colLocation = $("<div>", {class: "col col-box", style:"--height: 20px"}).appendTo($rowLocation);    
+      const $location = $("<small>", { class: "text-muted truncate-lines", text: location, style:"--lines: 1"}).appendTo($colLocation);
+
+      const $rowDate = $("<div>", {class: "row"}).appendTo($cardBody);   
+      const $colDate = $("<div>", {class: "col"}).appendTo($rowDate);    
+      const $date = $("<p>", { class: "cardRow m-0", text: getDateText(beg, end)}).appendTo($colDate);
+
+      const $rowTime = $("<div>", {class: "row"}).appendTo($cardBody);   
+      const $colTime = $("<div>", {class: "col"}).appendTo($rowTime);    
+      const $time = $("<p>", { class: "cardRow m-0", text: `${heure}→${heureFin} · ${duree}`}).appendTo($colTime);
+
+      const $rowGenre = $("<div>", {class: "row"}).appendTo($cardBody);   
+      const $colGenre = $("<div>", {class: "col"}).appendTo($rowGenre);    
+      const $genre = $("<p>", { class: "cardRow m-0", text: genre}).appendTo($colGenre);
+    };
+  $("#cards").html($row); 
+}
+
 function showFaveMode(faveTitle, strParams) {
+  const idsArray = strParams ? strParams.split(',') : [];
+  const subMap = new Map(
+    idsArray
+      .filter(key => avignonMap.has(key))
+      .map(key => [key, avignonMap.get(key)])
+  );
+
   const title = `<p class="showModeTitle">${faveTitle}</p>`;
   $("body").append(title);
   
-    const idsArray = strParams ? strParams.split(',') : [];
+  const sort = `
+  <div class="container">
+  <div class="row">
+    <div class="col-2 offset-10 d-flex justify-content-end">
+    <div class="btn-group me-2 mb-2" role="group" aria-label="Button group with nested dropdown">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle btn-sm btnSort dropdownMenuSort" data-bs-toggle="dropdown" aria-expanded="false">
+          Trier par
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" id="dropdownSort">
+          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="defaut">Défaut</a></li>
+          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="titre">Titre</a></li>
+          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="heure">Heure</a></li>
+        </ul>
+      <button type="button" class="btn btn-primary btn-sm btnSort" id="sortDirection"><i class="fa-solid fa-arrow-down-wide-short"></i></button>
+    </div>
+    </div>
+  </div>
+</div>
 
-    const $container = $("<div>", { class: "container" });
-    const $row = $("<div>", { class: "row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-5 row-cols-xxl-6 gy-4" }).appendTo($container);
+  <div id="cards" class="container"></div>`;
+  $("body").append(sort);
+  drawCards(subMap);
 
-    idsArray.forEach(id => {
-      if (!avignonMap.has(id)) {
-        console.log("skip - ", id, " doesn't exist");
-        return;
-      }
+  $('#dropdownSort').on('click', '.dropdown-item', function (e) {
+    e.preventDefault();
 
-        const vals = avignonMap.get(id);
-        const name = vals[0]
-        const url = `http://www.festivaloffavignon.com/spectacles/${id}-${vals[1]}`;
-        const url_image = `https://www.festivaloffavignon.com/data/spectacles/${id}-${vals[2]}-catalogue.${vals[3]}`;
-        const beg = vals[4];
-        const end = vals[5];
-        const heure = formatHour(vals[6]);
-        const heureFin = formatHour(vals[7]);
-        const duree = formatHour(vals[8]);
-        const location = vals[9];
-        const genre = vals[10] == "nan" ? '' : vals[10];
+    const sortBy = $(this).attr('data-value');
+    $('#dropdownSort .dropdown-item').removeClass('active');
+    $(this).addClass('active dropdownItemSort');
+    drawCards(subMap)
+  });
 
-        const $col = $("<div>", { class: "col" }).appendTo($row);
-        const $card = $("<div>", { class: "card h-100 hover-border"}).appendTo($col);
-        const $aImg = $("<a>", { href: url, target: "_blank"}).appendTo($card);
-        const $img = $("<img>", {class: "card-img-top", src: url_image, alt: url_image}).appendTo($aImg);
-        const $cardBody = $("<div>", { class: "card-body" }).appendTo($card);
-        
-        const $rowTitle = $("<div>", {class: "row"}).appendTo($cardBody);   
-        const $colTitle = $("<div>", {class: "col col-box", style:"--height: 20px"}).appendTo($rowTitle);    
-        const $aTitle = $("<a>", { href: url, target: "_blank", class: "text-decoration-none text-reset"}).appendTo($colTitle);
-        const $cardTitle = $("<h6>", { class: "card-title truncate-lines", text: name, style:"--lines: 1"}).appendTo($aTitle);    
-        
-        const $rowLocation = $("<div>", {class: "row"}).appendTo($cardBody);   
-        const $colLocation = $("<div>", {class: "col col-box", style:"--height: 20px"}).appendTo($rowLocation);    
-        const $location = $("<small>", { class: "text-muted truncate-lines", text: location, style:"--lines: 1"}).appendTo($colLocation);
-
-        const $rowDate = $("<div>", {class: "row"}).appendTo($cardBody);   
-        const $colDate = $("<div>", {class: "col"}).appendTo($rowDate);    
-        const $date = $("<p>", { class: "cardRow m-0", text: getDateText(beg, end)}).appendTo($colDate);
-
-
-        const $rowTime = $("<div>", {class: "row"}).appendTo($cardBody);   
-        const $colTime = $("<div>", {class: "col"}).appendTo($rowTime);    
-        const $time = $("<p>", { class: "cardRow m-0", text: `${heure}→${heureFin} · ${duree}`}).appendTo($colTime);
-
-
-        const $rowGenre = $("<div>", {class: "row"}).appendTo($cardBody);   
-        const $colGenre = $("<div>", {class: "col"}).appendTo($rowGenre);    
-        const $genre = $("<p>", { class: "cardRow m-0", text: genre}).appendTo($colGenre);
-
-
-      });
-    $container.appendTo("body");
-    setFooter();
-    setShareButtons();
+  $('#sortDirection').click(function() {
+    const icon = $(this).find('i');
+    if (icon.hasClass('fa-arrow-down-wide-short')) {
+      icon.removeClass('fa-arrow-down-wide-short').addClass('fa-arrow-up-wide-short');
+    } else {
+      icon.removeClass('fa-arrow-up-wide-short').addClass('fa-arrow-down-wide-short');
+    }
+    drawCards(subMap);
+  });
+  setFooter();
+  setShareButtons(faveTitle);
 }
