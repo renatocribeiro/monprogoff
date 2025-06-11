@@ -40,8 +40,7 @@ function setShareButtons(){
     </div>`;
   $("#footerDisclaimer").prepend(buttons);
   
-  $('#mailBtn').attr("href", `mailto:?Subject=Mur d'affiches&body=${window.location.href}`);
-
+  $('#mailBtn').attr("href", `mailto:?Subject=Mur d'affiches&body=${encodeURIComponent(window.location.href)}`);
   const modalShare = `
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="qrModal">
   <div class="modal-dialog modal-dialog-centered" style="max-width: 290px; margin: 0 auto;">
