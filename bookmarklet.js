@@ -13,7 +13,7 @@ export function bookmarkletGeneratePage(){
       ids.push(idArr[0]);
     });
     const uniqueIds = [...new Set(ids)];
-    const inputName = $('#inputNameUpload').val();
+    const inputName = "Mes favoris"
     const newUrl = 'https://renatocribeiro.github.io/murdaffiches/index.html?p='+uniqueIds.join()+'&n='+inputName;
     window.open(newUrl, '_blank');
     console.log(newUrl); 
