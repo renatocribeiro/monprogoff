@@ -36,6 +36,7 @@ function setShareButtons(faveTitle){
       <div class="btn-group" role="group">
         <button type="button" class="btn btnShare" role="button" data-bs-toggle="modal" data-bs-target="#qrModal" id="qrCodeBtn"><i class="fa fa-qrcode"></i></button>
         <button type="button" class="btn btnShare"><a href="" id="mailBtn" style="color: black;"><i class="fa-solid fa-envelope"></i></a></button>
+        <button type="button" class="btn btnShare" id="clipboardBtn"><i class="fa-solid fa-clipboard"></i></button>
       </div>  
     </div>`;
   $("#footerDisclaimer").prepend(buttons);
@@ -66,6 +67,26 @@ function setShareButtons(faveTitle){
         correctLevel : QRCode.CorrectLevel.H
       });
     }
+  });
+
+  const tooltip = new bootstrap.Tooltip($("#clipboardBtn"), {
+    trigger: 'manual',
+    placement: 'top',
+    animation: true,
+    title: "Copié",
+  });
+  $('#clipboardBtn').on('click', function() {
+    const currentUrl = window.location.href;
+    navigator.clipboard.writeText(currentUrl)
+    .then(() => {
+      tooltip.show();
+      setTimeout(() => {
+        tooltip.hide();
+      }, 1000);
+    })
+    .catch(err => {
+      console.error("Failed to copy text: ", err);
+    });
   });
 }
 
@@ -283,11 +304,35 @@ function formatHour(s) {
   return s.replace(":", "h");
 }
 
-function sortByDefault(map, asc) {
+function sortByHeure(mymap, asc) {
+  var sortedMap = new Map(
+    [...mymap.entries()].sort(([, a], [, b]) => {
+      const timeA = a[6];
+      const timeB = b[6];
+      const [hA, mA] = timeA.split(':').map(Number);
+      const [hB, mB] = timeB.split(':').map(Number);
+      return hA !== hB ? hA - hB : mA - mB;
+    })
+  );
   if (asc) {
-    return map;
+    return sortedMap;
   } else {
-    return new Map([...map.entries()].reverse());
+    return new Map([...sortedMap.entries()].reverse());
+  }
+}
+
+function sortByLieu(map, asc) {
+  var sortedMap = new Map(
+    [...map.entries()].sort(([, a], [, b]) => {
+      const strA = a[9];
+      const strB = b[9];
+      return strA.localeCompare(strB);
+    })
+  );
+  if (asc) {
+    return sortedMap;
+  } else {
+    return new Map([...sortedMap.entries()].reverse());
   }
 }
 
@@ -306,14 +351,12 @@ function sortByTitre(map, asc) {
   }
 }
 
-function sortByHeure(mymap, asc) {
+function sortByType(map, asc) {
   var sortedMap = new Map(
-    [...mymap.entries()].sort(([, a], [, b]) => {
-      const timeA = a[6];
-      const timeB = b[6];
-      const [hA, mA] = timeA.split(':').map(Number);
-      const [hB, mB] = timeB.split(':').map(Number);
-      return hA !== hB ? hA - hB : mA - mB;
+    [...map.entries()].sort(([, a], [, b]) => {
+      const strA = a[10];
+      const strB = b[10];
+      return strA.localeCompare(strB);
     })
   );
   if (asc) {
@@ -325,12 +368,14 @@ function sortByHeure(mymap, asc) {
 
 function applySort(map, sortBy, asc) {
   switch (sortBy) {
-    case "defaut":
-      return sortByDefault(map, asc);
-    case "titre":
-      return sortByTitre(map, asc);
     case "heure":
       return sortByHeure(map, asc);
+    case "lieu":
+      return sortByLieu(map, asc);
+    case "titre":
+      return sortByTitre(map, asc);
+    case "type":
+      return sortByType(map, asc);
     default:
       console.log("wrong sortby -", sortBy);
       return map;
@@ -346,7 +391,7 @@ function drawCards(subMap) {
     const label = selectedItem.text();
     sortBy = value;
   } else {
-    sortBy = "defaut";
+    sortBy = "heure";
   }
   const sortIcon = $("#sortDirection").find('i');
     if (sortIcon.hasClass('fa-arrow-down-wide-short')) {
@@ -415,13 +460,14 @@ function showFaveMode(faveTitle, strParams) {
   <div class="row">
     <div class="col-2 offset-10 d-flex justify-content-end">
     <div class="btn-group me-2 mb-2" role="group" aria-label="Button group with nested dropdown">
-        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle btn-sm btnSort dropdownMenuSort" data-bs-toggle="dropdown" aria-expanded="false">
+        <button id="btnGroupSort" type="button" class="btn btn-primary dropdown-toggle btn-sm btnSort dropdownMenuSort" data-bs-toggle="dropdown" aria-expanded="false">
           Trier par
         </button>
-        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" id="dropdownSort">
-          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="defaut">Défaut</a></li>
+        <ul class="dropdown-menu" id="dropdownSort">
+          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="heure" id="dropdownItemDefault">Heure</a></li>
+          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="lieu">Lieu</a></li>
           <li><a class="dropdown-item dropdownItemSort" href="#" data-value="titre">Titre</a></li>
-          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="heure">Heure</a></li>
+          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="type">Type</a></li>
         </ul>
       <button type="button" class="btn btn-primary btn-sm btnSort" id="sortDirection"><i class="fa-solid fa-arrow-up-wide-short"></i></button>
     </div>
@@ -432,13 +478,17 @@ function showFaveMode(faveTitle, strParams) {
   <div id="cards" class="container"></div>`;
   $("body").append(sort);
   drawCards(subMap);
+  $("#dropdownItemDefault").addClass('active dropdownItemSort');
 
   $('#dropdownSort').on('click', '.dropdown-item', function (e) {
     e.preventDefault();
 
-    const sortBy = $(this).attr('data-value');
     $('#dropdownSort .dropdown-item').removeClass('active');
     $(this).addClass('active dropdownItemSort');
+    
+    $('#btnGroupSort').contents().filter(function() {
+      return this.nodeType === 3; // text node
+    }).first().replaceWith($(this).text() + ' ');
     drawCards(subMap)
   });
 
