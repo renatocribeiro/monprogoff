@@ -461,7 +461,7 @@ function showFaveMode(faveTitle, strParams) {
     <div class="col-2 offset-10 d-flex justify-content-end">
     <div class="btn-group me-2 mb-2" role="group" aria-label="Button group with nested dropdown">
         <button id="btnGroupSort" type="button" class="btn btn-primary dropdown-toggle btn-sm btnSort dropdownMenuSort" data-bs-toggle="dropdown" aria-expanded="false">
-          Trier par
+          Heure
         </button>
         <ul class="dropdown-menu" id="dropdownSort">
           <li><a class="dropdown-item dropdownItemSort" href="#" data-value="heure" id="dropdownItemDefault">Heure</a></li>
