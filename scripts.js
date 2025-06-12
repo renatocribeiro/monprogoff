@@ -457,24 +457,23 @@ function showFaveMode(faveTitle, strParams) {
   
   const sort = `
   <div class="container">
-  <div class="row">
-    <div class="col-2 offset-10 d-flex justify-content-end">
-    <div class="btn-group me-2 mb-2" role="group" aria-label="Button group with nested dropdown">
-        <button id="btnGroupSort" type="button" class="btn btn-primary dropdown-toggle btn-sm btnSort dropdownMenuSort" data-bs-toggle="dropdown" aria-expanded="false">
-          Heure
-        </button>
-        <ul class="dropdown-menu" id="dropdownSort">
-          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="heure" id="dropdownItemDefault">Heure</a></li>
-          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="lieu">Lieu</a></li>
-          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="titre">Titre</a></li>
-          <li><a class="dropdown-item dropdownItemSort" href="#" data-value="type">Type</a></li>
-        </ul>
-      <button type="button" class="btn btn-primary btn-sm btnSort" id="sortDirection"><i class="fa-solid fa-arrow-up-wide-short"></i></button>
-    </div>
+    <div class="row">
+      <div class="col-2 offset-10 d-flex justify-content-end">
+        <div class="btn-group me-2 mb-2" role="group" aria-label="Button group with nested dropdown">
+          <button id="btnGroupSort" type="button" class="btn btn-primary dropdown-toggle btn-sm btnSort dropdownMenuSort" data-bs-toggle="dropdown" aria-expanded="false">
+            Trié par heure
+          </button>
+          <ul class="dropdown-menu" id="dropdownSort">
+            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="heure" id="dropdownItemDefault">Heure</a></li>
+            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="lieu">Lieu</a></li>
+            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="titre">Titre</a></li>
+            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="type">Type</a></li>
+          </ul>
+          <button type="button" class="btn btn-primary btn-sm btnSort" id="sortDirection"><i class="fa-solid fa-arrow-up-wide-short"></i></button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
   <div id="cards" class="container"></div>`;
   $("body").append(sort);
   drawCards(subMap);
@@ -487,8 +486,8 @@ function showFaveMode(faveTitle, strParams) {
     $(this).addClass('active dropdownItemSort');
     
     $('#btnGroupSort').contents().filter(function() {
-      return this.nodeType === 3; // text node
-    }).first().replaceWith($(this).text() + ' ');
+      return this.nodeType === 3;
+    }).first().replaceWith("Trié par " + $(this).data("value") + ' ');
     drawCards(subMap)
   });
 
