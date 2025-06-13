@@ -382,6 +382,11 @@ function applySort(map, sortBy, asc) {
   }
 }
 
+function isDummy(str) {
+  const num = Number(str);
+  return !isNaN(num) && num >= 1000 && num <= 1100;
+}
+
 function drawCards(subMap) {
   var asc = false;
   var sortBy = "";
@@ -405,7 +410,7 @@ function drawCards(subMap) {
   for (const [id, vals] of sortedMap) {
       const name = vals[0]
       const url = `http://www.festivaloffavignon.com/spectacles/${id}-${vals[1]}`;
-      const url_image = `https://www.festivaloffavignon.com/data/spectacles/${id}-${vals[2]}-catalogue.${vals[3]}`;
+      const url_image = isDummy(id) ? vals[2] : `https://www.festivaloffavignon.com/data/spectacles/${id}-${vals[2]}-catalogue.${vals[3]}`;
       const beg = vals[4];
       const end = vals[5];
       const heure = formatHour(vals[6]);
@@ -417,7 +422,8 @@ function drawCards(subMap) {
       const $col = $("<div>", { class: "col" }).appendTo($row);
       const $card = $("<div>", { class: "card h-100 hover-border"}).appendTo($col);
       const $aImg = $("<a>", { href: url, target: "_blank"}).appendTo($card);
-      const $img = $("<img>", {class: "card-img-top", src: url_image, alt: url_image}).appendTo($aImg);
+      const $divImg = $("<div>", {class: "image-crop"}).appendTo($aImg);
+      const $img = $("<img>", {class: "card-img-top img-fluid", src: url_image, alt: url_image}).appendTo($divImg);
       const $cardBody = $("<div>", { class: "card-body" }).appendTo($card);
       
       const $rowTitle = $("<div>", {class: "row"}).appendTo($cardBody);   

@@ -1792,4 +1792,19 @@ export const avignonMap = new Map([["5697", ["Imprenable", "imprenable", "TWnJlR
     ["7737", ["Love, Linda • La vie de Mrs Cole Porter", "love-linda-la-vie-de-mrs-cole-porter", "oISDBCp6cGXN0H3kTMrT", "jpg", "5", "26", "21:00", "22:10", "1:10", "CHÊNE NOIR (THÉÂTRE DU)", "Théâtre musical"]],
     ["6396", ["Le dernier jour de Pierre", "le-dernier-jour-de-pierre", "P4PjiLpZyz3hRahRSPhx", "jpg", "5", "19", "10:20", "12:50", "2:30", "TRAIN BLEU (THÉÂTRE DU)", "Marionnette-objet"]],
     ["7609", ["À ce stade de la nuit", "ce-stade-de-la-nuit", "BZdSuW92ooAalJFdbwEB", "jpg", "5", "26", "16:15", "17:10", "0:55", "HALLES (THÉÂTRE DES)", "Théâtre contemporain"]],
-    ]);
+    ["1000", ["Nuit de cendre", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/e/ee/Affiche-Martinique.jpg", "", "5", "26", "11:30", "12:45", "1:15", "Le téâtre obscur", "Théâtre contemporain"]],
+    ["1001", ["Le cri muet", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/0/05/Arlette_Dorg%C3%A8re_%281880-1965%29_au_Parisiana_%28A%29.jpg", "", "5", "20", "16:15", "17:10", "0:55", "Théâtre de l’Île", "Seul·e en scène"]],
+    ["1020", ["Faux printemps", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/3/38/Tournee_du_Theatre_Antoine_Suzanne_Despres.jpg", "", "10", "18", "19:25", "20:45", "1:20", "Le Grand Voile", "Comédie"]],
+    ["1100", ["Chair et vent", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/0/0b/Cloches-de-Corneville-poster-1877.png", "", "5", "26", "15:35", "17:15", "1:40", "Le Rideau Rouge", "Conférence-spectacle"]],
+    ["1023", ["Sang d'oubli", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/a/a5/Cheret%2C_Jules_-_Pantomimes_Lumineuses_%28pl_41%29.jpg", "", "5", "26", "14:15", "15:15", "1:00", "Le Vent Bleu", "Performance"]],
+    ["1030", ["Les murs pleurent", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/f/ff/Charles_Gesmar_-_Barbette_1926.jpg", "", "5", "20", "17:30", "18:40", "1:10", "Le Cube Noir", "Stand-up"]],
+    ["1034", ["Zone fragile", "ceci-n-est-pas-une-piecevalide", "https://upload.wikimedia.org/wikipedia/commons/5/55/Albert_Guillaume_-_Gigolette.jpg", "", "18", "18", "21:45", "23:20", "1:35", "Le Pont d’Or", "Comédie"]],
+    ["1098", ["Sous la brume", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/c/ce/G.K._Benda_-_Poster_Clara_Tambour.jpg", "", "8", "26", "12:25", "13:40", "1:15", "Scène de Fer", "Théâtre"]],
+    ["1067", ["Chute lente", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/c/c2/Steinlen-Mothu_et_Doria.jpg", "", "5", "26", "17:40", "19:00", "1:20", "Le Théâtre Flux", "Comédie"]],
+    ["1076", ["Echo sale", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/2/2e/Quartier_Cabaret_Fay.jpg", "", "5", "26", "13:45", "15:10", "1:25", "La Loge Verte", "Théâtre"]],
+    ["1083", ["Rien qu’hier", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/8/8c/PP_D089_poster_by_toulouse-lautrec_for_cadieux.jpg", "", "7", "21", "19:00", "20:00", "1:00", "La Voix Cachée", "Show-case"]],
+    ["1036", ["Faim blanche", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/6/67/Poster_by_Happichy_of_Severin_in_Chand_d%27habits%21%2C_1896.jpg", "", "5", "26", "19:45", "20:55", "1:10", "Le Théâtre Clair", "Stand-up"]],
+    ["1062", ["L’œil noir", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/9/95/M%C3%A9tivet-Eug%C3%A9nie_Buffet.jpg", "", "8", "2", "17:30", "18:00", "0:30", "L’Atelier Fou", "Cirque"]],
+    ["1030", ["Brûle-âme", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/9/99/Jean_de_Paleologu_-_Poster_Cl%C3%A9o_de_M%C3%A9rode_1901.jpg", "", "5", "26", "16:30", "17:50", "1:20", "Théâtre Mirage", "Théâtre contemporain"]],
+    ["1031", ["Trop tard", "ceci-n-est-pas-une-piece", "https://upload.wikimedia.org/wikipedia/commons/5/57/Grasset-Werther.jpg", "", "9", "14", "17:00", "17:45", "0:45", "Le Lieu Secret", "Théâtre musical"]]
+]);
