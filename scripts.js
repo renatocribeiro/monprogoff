@@ -451,6 +451,7 @@ function drawCards(subMap) {
 }
 
 function showFaveMode(faveTitle, strParams) {
+  $('meta[property="og:url"]').attr('content', window.location.href);
   const idsArray = strParams ? strParams.split(',') : [];
   const subMap = new Map(
     idsArray
