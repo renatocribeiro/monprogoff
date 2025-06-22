@@ -4,14 +4,17 @@ import { bookmarkletGeneratePage } from './bookmarklet.js';
 export function parseParams(){
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  var faveTitle = "Mes favoris";
+  var faveTitle = "Mur d'affiches";
+  var defaultSort = "h";
   if (urlParams.has("n")){
-    const nameString = urlParams.get('n');
-    faveTitle = nameString;
+    faveTitle = urlParams.get('n');
+  }
+  if (urlParams.has("s")){
+    defaultSort = urlParams.get('s');
   }
   if (urlParams.has("p")){
     const tagsString = urlParams.get('p');
-    showFaveMode(faveTitle, tagsString);
+    showFaveMode(faveTitle, tagsString, defaultSort);
     return
   }
   
@@ -304,6 +307,14 @@ function formatHour(s) {
   return s.replace(":", "h");
 }
 
+function sortByDefaut(mymap, asc) {
+  if (asc) {
+    return mymap;
+  } else {
+    return new Map([...mymap.entries()].reverse());
+  }
+}
+
 function sortByHeure(mymap, asc) {
   var sortedMap = new Map(
     [...mymap.entries()].sort(([, a], [, b]) => {
@@ -368,6 +379,8 @@ function sortByType(map, asc) {
 
 function applySort(map, sortBy, asc) {
   switch (sortBy) {
+    case "défaut":
+      return sortByDefaut(map, asc);
     case "heure":
       return sortByHeure(map, asc);
     case "lieu":
@@ -450,7 +463,38 @@ function drawCards(subMap) {
   $("#cards").html($row); 
 }
 
-function showFaveMode(faveTitle, strParams) {
+function setDefaultDropdown(sortStr) {
+  switch (sortStr) {
+    case "d":
+      $("#dropdownDefaut").addClass('active dropdownItemSort');
+      $('#btnGroupSort').text("Trié par " + $("#dropdownDefaut").data("value") + ' ');
+      return
+    case "h":
+      $("#dropdownHeure").addClass('active dropdownItemSort');
+      $('#btnGroupSort').text("Trié par " + $("#dropdownHeure").data("value") + ' ');
+      return
+    case "l":
+      $("#dropdownLieu").addClass('active dropdownItemSort');
+      $('#btnGroupSort').text("Trié par " + $("#dropdownLieu").data("value") + ' ');
+      return
+    case "t":
+      $("#dropdownTitre").addClass('active dropdownItemSort');
+      $('#btnGroupSort').text("Trié par " + $("#dropdownTitre").data("value") + ' ');
+      return
+    case "y":
+      $("#dropdownType").addClass('active dropdownItemSort');
+      $('#btnGroupSort').text("Trié par " + $("#dropdownType").data("value") + ' ');
+      return
+    default:
+      console.log("wrong default sort string -", sortStr);
+      console.log("defaulting to heure");
+      $("#dropdownHeure").addClass('active dropdownItemSort');
+      $('#btnGroupSort').text("Trié par " + $("#dropdownHeure").data("value") + ' ');
+      return
+  }
+}
+
+function showFaveMode(faveTitle, strParams, defaultSort) {
   $('meta[property="og:url"]').attr('content', window.location.href);
   const idsArray = strParams ? strParams.split(',') : [];
   const subMap = new Map(
@@ -467,14 +511,13 @@ function showFaveMode(faveTitle, strParams) {
     <div class="row">
       <div class="col-2 offset-10 d-flex justify-content-end">
         <div class="btn-group me-2 mb-2" role="group" aria-label="Button group with nested dropdown">
-          <button id="btnGroupSort" type="button" class="btn btn-primary dropdown-toggle btn-sm btnSort dropdownMenuSort" data-bs-toggle="dropdown" aria-expanded="false">
-            Trié par heure
-          </button>
+          <button id="btnGroupSort" type="button" class="btn btn-primary dropdown-toggle btn-sm btnSort dropdownMenuSort" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu" id="dropdownSort">
-            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="heure" id="dropdownItemDefault">Heure</a></li>
-            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="lieu">Lieu</a></li>
-            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="titre">Titre</a></li>
-            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="type">Type</a></li>
+            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="défaut"  id="dropdownDefaut">Défaut</a></li>
+            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="heure" id="dropdownHeure">Heure</a></li>
+            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="lieu" id="dropdownLieu">Lieu</a></li>
+            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="titre" id="dropdownTitre">Titre</a></li>
+            <li><a class="dropdown-item dropdownItemSort" href="#" data-value="type" id="dropdownType">Type</a></li>
           </ul>
           <button type="button" class="btn btn-primary btn-sm btnSort" id="sortDirection"><i class="fa-solid fa-arrow-up-wide-short"></i></button>
         </div>
@@ -483,18 +526,15 @@ function showFaveMode(faveTitle, strParams) {
   </div>
   <div id="cards" class="container"></div>`;
   $("body").append(sort);
+  setDefaultDropdown(defaultSort);
   drawCards(subMap);
-  $("#dropdownItemDefault").addClass('active dropdownItemSort');
 
   $('#dropdownSort').on('click', '.dropdown-item', function (e) {
     e.preventDefault();
 
     $('#dropdownSort .dropdown-item').removeClass('active');
     $(this).addClass('active dropdownItemSort');
-    
-    $('#btnGroupSort').contents().filter(function() {
-      return this.nodeType === 3;
-    }).first().replaceWith("Trié par " + $(this).data("value") + ' ');
+    $('#btnGroupSort').text("Trié par " + $(this).data("value") + ' ');
     drawCards(subMap)
   });
 
