@@ -27,7 +27,7 @@ function setFooter(){
   <footer class="text-center d-flex flex-column justify-content-center" style="height: 200px;" id="footerDisclaimer">
     <div class="footerRow">Le 'mur d'affiches' est un projet open source indépendant.</div>
     <div class="footerRow">Il n’est ni affilié ni soutenu par AF&C.</div>
-    <div class="footerRow">Dernière mise à jour des données : 09 juin 2025 à 19h00</div>
+    <div class="footerRow">Dernière mise à jour des données : 02 juillet 2025 à 21h00</div>
     <div class="footerRow">Le code source est disponible <a class="custom-link" href="https://github.com/renatocribeiro/murdaffiches" target="_blank">ici</a></div>
     <div class="footerRow">Vous trouverez d'autres ressources sur <a class="custom-link" href="https://www.lesartsvivants.org" target="_blank">lesartsvivants.org</a></div>
   </footer>`;
