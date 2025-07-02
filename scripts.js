@@ -25,10 +25,11 @@ export function parseParams(){
 function setFooter(){
   const footer = `
   <footer class="text-center d-flex flex-column justify-content-center" style="height: 200px;" id="footerDisclaimer">
-    <div class="footerRow">Ce site est un projet open source et totalement indépendant.</div>
+    <div class="footerRow">Le 'mur d'affiches' est un projet open source indépendant.</div>
     <div class="footerRow">Il n’est ni affilié ni soutenu par AF&C.</div>
     <div class="footerRow">Dernière mise à jour des données : 09 juin 2025 à 19h00</div>
     <div class="footerRow">Le code source est disponible <a class="custom-link" href="https://github.com/renatocribeiro/murdaffiches">ici</a></div>
+    <div class="footerRow">Vous trouverez d'autres ressources sur <a class="custom-link" href="https://www.lesartsvivants.org">lesartsvivants.org</a></div>
   </footer>`;
   $("body").append(footer);
 }
@@ -37,6 +38,7 @@ function setShareButtons(faveTitle){
   const buttons = `
     <div>
       <div class="btn-group" role="group">
+        <button type="button" class="btn btnShare" role="button" id="homeBtn"><i class="fa-solid fa-house" onclick="window.open('/murdaffiches', '_blank')"></i></button>
         <button type="button" class="btn btnShare" role="button" data-bs-toggle="modal" data-bs-target="#qrModal" id="qrCodeBtn"><i class="fa fa-qrcode"></i></button>
         <button type="button" class="btn btnShare"><a href="" id="mailBtn" style="color: black;"><i class="fa-solid fa-envelope"></i></a></button>
         <button type="button" class="btn btnShare" id="clipboardBtn"><i class="fa-solid fa-clipboard"></i></button>
