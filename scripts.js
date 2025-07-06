@@ -24,7 +24,7 @@ export function parseParams(){
 
 function setFooter(){
   const footer = `
-  <footer class="text-center d-flex flex-column justify-content-center" style="height: 200px;" id="footerDisclaimer">
+  <footer class="text-center d-flex flex-column justify-content-center py-2" id="footerDisclaimer">
     <div class="footerRow">Le 'mur d'affiches' est un projet open source indépendant.</div>
     <div class="footerRow">Il n’est ni affilié ni soutenu par AF&C.</div>
     <div class="footerRow">Dernière mise à jour des données : 02 juillet 2025 à 21h00</div>
@@ -39,7 +39,6 @@ function setShareButtons(faveTitle){
     <div>
       <div class="btn-group" role="group">
         <button type="button" class="btn btnShare" role="button" id="homeBtn"><i class="fa-solid fa-house" onclick="window.open('/murdaffiches', '_blank')"></i></button>
-        <button type="button" class="btn btnShare" role="button" data-bs-toggle="modal" data-bs-target="#qrModal" id="qrCodeBtn"><i class="fa fa-qrcode"></i></button>
         <button type="button" class="btn btnShare"><a href="" id="mailBtn" style="color: black;"><i class="fa-solid fa-envelope"></i></a></button>
         <button type="button" class="btn btnShare" id="clipboardBtn"><i class="fa-solid fa-clipboard"></i></button>
       </div>  
@@ -47,33 +46,6 @@ function setShareButtons(faveTitle){
   $("#footerDisclaimer").prepend(buttons);
   
   $('#mailBtn').attr("href", `mailto:?Subject=${encodeURIComponent(faveTitle)}&body=${encodeURIComponent(window.location.href)}`);
-  const modalShare = `
-  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="qrModal">
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 290px; margin: 0 auto;">
-    <div class="modal-content">
-      <div class="modal-body align-items-center">
-          <div id="qrcode"></div>
-      </div>
-    </div>
-  </div>
-</div>`;
-
-  $("body").append(modalShare);
-
-  $('#qrCodeBtn').on('click', function() {
-    const qrcode = document.getElementById('qrcode')
-    if (qrcode && qrcode.innerHTML.trim() === '') {
-      const qrcode = new QRCode(document.getElementById('qrcode'), {
-        text: window.location.href,
-        // width: 200,
-        // height: 200,
-        colorDark : '#000',
-        colorLight : '#fff',
-        correctLevel : QRCode.CorrectLevel.H
-      });
-    }
-  });
-
   const tooltip = new bootstrap.Tooltip($("#clipboardBtn"), {
     trigger: 'manual',
     placement: 'top',
@@ -93,6 +65,25 @@ function setShareButtons(faveTitle){
       console.error("Failed to copy text: ", err);
     });
   });
+}
+function setQrCode() {
+  const qr = `
+  <div class="d-flex justify-content-center align-items-center bt-3 mb-3">
+    <div class="img-fluid" id="qrcode"></div>
+  </div>`;
+  $("body").append(qr);
+
+  const qrcode = document.getElementById('qrcode')
+  if (qrcode && qrcode.innerHTML.trim() === '') {
+    const qrcode = new QRCode(document.getElementById('qrcode'), {
+      text: window.location.href,
+      // width: 200,
+      // height: 200,
+      colorDark : '#000',
+      colorLight : '#fff',
+      correctLevel : QRCode.CorrectLevel.H
+    });
+  }
 }
 
 function creationMode() {
@@ -551,4 +542,5 @@ function showFaveMode(faveTitle, strParams, defaultSort) {
   });
   setFooter();
   setShareButtons(faveTitle);
+  setQrCode();
 }
