@@ -96,23 +96,23 @@ function creationMode() {
         <div class="card cardSquare300 hover-border" id="cardCopy">
           <div class="card-body">
             <h5 class="card-title">Génération à partir de liens</h5>
-            <p class="card-text">Collez une ou plusieurs URLs de festivaloffavignon.com : une liste de spectacles sera générée automatiquement à partir de ces liens.</p>
+            <p class="card-text">Collez des liens de spectacles présents sur festivaloffavignon.com pour générer votre mur d'affiches.</p>
           </div>
         </div>
       </div>
       <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 colSquare300" role="button" data-bs-toggle="modal" data-bs-target="#uploadModal">
         <div class="card cardSquare300 hover-border">
           <div class="card-body">
-            <h5 class="card-title">Créer depuis une page enregistrée</h5>
-            <p class="card-text">Sauvegardez une page de favoris sur festivaloffavignon.com, puis importez ce fichier ici. La liste sera générée automatiquement.</p>
+            <h5 class="card-title">Générer un mur d'affiches de vos favoris (html)</h5>
+            <p class="card-text"></p>
           </div>
         </div>
       </div>
       <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 colSquare300" role="button" data-bs-toggle="modal" data-bs-target="#bookmarkletModal">
         <div class="card cardSquare300 hover-border">
           <div class="card-body">
-            <h5 class="card-title">Créer via Marque-page</h5>
-            <p class="card-text">Sauvegardez le marque-page fourni dans votre barre de favoris. Ensuite, allez sur la page de favoris de festivaloffavignon.com et ouvrez ce marque-page pour générer automatiquement votre liste.</p>
+            <h5 class="card-title">Générer un mur d'affiches de vos favoris (marque-page)</h5>
+            <p class="card-text"></p>
           </div>
         </div>
       </div>
@@ -129,7 +129,7 @@ function creationMode() {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-          <button type="button" class="btn btn-primary" id="copySendBtn">Voir ma page de favoris!</button>
+          <button type="button" class="btn btn-primary" id="copySendBtn">Voir mon Mur d'affiches !</button>
         </div>
       </div>
     </div>
@@ -140,13 +140,13 @@ function creationMode() {
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Créer depuis une page enregistrée</h5>
+          <h5 class="modal-title">Générer un Mur d'affiches sur le site du Off</h5>
         </div>
         <div class="modal-body" id="uploadModalBody">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-          <button type="button" class="btn btn-primary" id="uploadSendBtn">Voir ma page de favoris!</button>
+          <button type="button" class="btn btn-primary" id="uploadSendBtn">Voir mon Mur d'affiches !</button>
         </div>
       </div>
     </div>
@@ -187,15 +187,15 @@ function setCopyModal() {
   const $colName = $("<div>", {class : "col"}).appendTo($rowName);
   const $mbName = $("<div>", {class : "mb-3"}).appendTo($colName);
 
-  const $lblName = $("<label>", {for: "inputName", text:"Veuillez saisir un nom pour la liste de favoris:"}).appendTo($mbName);
-  const $inputName = $("<input>", {type: "text", class: "form-control", id: "inputName", value: "Mes favoris du " + moment().format('DD/MM/YYYY à HH:mm'), required: true}).appendTo($mbName);
+  const $lblName = $("<label>", {for: "inputName", text:"Veuillez saisir le titre de votre Mur d'affiches :"}).appendTo($mbName);
+  const $inputName = $("<input>", {type: "text", class: "form-control", id: "inputName", value: "Mur d'affiches de Paul " + moment().format('DD/MM/YYYY à HH:mm'), required: true}).appendTo($mbName);
 
 
   const $row = $("<div>", {class : "row justify-content-center"}).appendTo($form);
   const $col = $("<div>", {class : "col"}).appendTo($row);
   const $mb = $("<div>", {class : "mb-3"}).appendTo($col);
-  const $label = $("<label>", {for: "textAreaUrls", text: "Veuillez saisir une ou plusieurs URLs pointant vers des pages de spectacles sur le site officiel du Festival Off:"}).appendTo($mb);
-  const $textArea = $("<textarea>", {class: "form-control", id: "textAreaUrls", rows: 10, placeholder: "https://www.festivaloffavignon.com/spectacles/0123-le-spectacle-qui-n-existe-pas", required: true}).appendTo($mb);
+  const $label = $("<label>", {for: "textAreaUrls", text: "Veuillez saisir les URLs pointant vers des pages de spectacles sur le site officiel du Off:"}).appendTo($mb);
+  const $textArea = $("<textarea>", {class: "form-control", id: "textAreaUrls", rows: 10, placeholder: "https://www.festivaloffavignon.com/spectacles/0123-le-spectacle-qui-n-existe-pas\nhttps://www.festivaloffavignon.com/spectacles/4567-un-autre-spectacle", required: true}).appendTo($mb);
   const $smallUrls = $("<small>", {class: "form-text text-muted", text: "Ce champ accepte plusieurs URL, séparées par tout type de délimiteur (espace, virgule, point-virgule, etc.)."}).appendTo($mb);
 
   const $rowBtm = $("<div>", {class : "row justify-content-center"}).appendTo($form);
@@ -219,12 +219,12 @@ function setUploadModal() {
   const instructions = `Rendez vous sur https://www.festivaloffavignon.com/espace-client/mes-favoris.<br>
     Appuyez sur CTRL+S ou ⌘+S.<br>
     Choisissez l’emplacement où vous voulez sauvegarder le fichier.<br>
-    Cliquez sur le bouton te téléchargement ci-dessous et choisissez le fichier html que vous venez de sauvegarder.<br>
-    Cliquez sur le bouton 'Voir ma page de favoris!'.`;
+    Cliquez sur le bouton de chargement ci-dessous et sélectionnez le fichier html.<br>
+    Cliquez sur le bouton 'Voir mon Mur d'affiches !'.`;
   $("<p>", {html: instructions}).appendTo($mbTitle);
 
-  const $lblName = $("<label>", {for: "inputNameUpload", text:"Veuillez saisir un nom pour la liste de favoris:"}).appendTo($mbTitle);
-  const $inputName = $("<input>", {type: "text", class: "form-control", id: "inputNameUpload", value: "Mes favoris du " + moment().format('DD/MM/YYYY à HH:mm'), required: true}).appendTo($mbTitle);
+  const $lblName = $("<label>", {for: "inputNameUpload", text:"Veuillez saisir un nom pour mon Mur d'affiches:"}).appendTo($mbTitle);
+  const $inputName = $("<input>", {type: "text", class: "form-control", id: "inputNameUpload", value: "Mur d'affiches de Paul " + moment().format('DD/MM/YYYY à HH:mm'), required: true}).appendTo($mbTitle);
 
 
   const $uploadTitle = $("<label>", {for: "formFile", class: "form-label", text: "Téléchargez votre fichier:"}).appendTo($mbTitle);
@@ -264,8 +264,8 @@ function setBookmarkletModal() {
   const $rowtitle = $("<div>", {class : "row justify-content-center"}).appendTo($container);
   const $colTitle = $("<div>", {class : "col"}).appendTo($rowtitle);
   const $mbTitle = $("<div>", {class : "mb-3"}).appendTo($colTitle);
-  $("<p>", {text : "Pour commencer, faites glisser (drag & drop) le lien du marque-page proposé vers votre barre de favoris de votre navigateur."}).appendTo($mbTitle);
-  $("<p>", {text : "Ensuite, rendez-vous sur la page de favoris de festivaloffavignon.com et cliquez sur ce marque-page dans votre barre pour générer automatiquement votre liste."}).appendTo($mbTitle);
+  $("<p>", {text : "Pour commencer, faites glisser (drag & drop) le lien du marque-page proposé plus bas la barre de favoris de votre navigateur."}).appendTo($mbTitle);
+  $("<p>", {text : "Ensuite, rendez vous sur la page de favoris de festivaloffavignon.com et cliquez sur le marque-page dans la barre de votre navigateur pour générer automatiquement votre mur d'affiches."}).appendTo($mbTitle);
   const bookmarkletStr = getBookmarkletUriEncoded();
   const $aBookmarklet = $("<a>", {href : bookmarkletStr, text: "marque-page", style: "color: black;"}).appendTo($mbTitle);
 
